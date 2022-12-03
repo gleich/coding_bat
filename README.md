@@ -1,4 +1,4 @@
-# Coding_Bat
+# coding_bat
 
 These are files from the CodingBat Code Practice website
 
