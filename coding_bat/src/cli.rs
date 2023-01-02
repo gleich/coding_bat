@@ -13,4 +13,5 @@ pub fn setup() -> Command {
         .about("small utility for creating coding bat files")
         .arg_required_else_help(true)
         .subcommand(Command::new("new").about("make a new document"))
+        .subcommand(Command::new("commit").about("automatically commit all documents"))
 }

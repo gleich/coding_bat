@@ -7,6 +7,7 @@ fn main() {
     let matches = cli::setup().get_matches();
     match matches.subcommand() {
         Some(("new", _)) => cmds::new::run(),
+        Some(("commit", _)) => cmds::commit::run(),
         _ => unreachable!(),
     }
 }

@@ -7,4 +7,7 @@ edition = "2021"
 anyhow = "1.0.68"
 clap = "4.0.32"
 dialoguer = { version = "0.10.2", features = ["fuzzy-select"] }
+git2 = "0.15.0"
 lazy_static = "1.4.0"
+pathdiff = "0.2.1"
+walkdir = "2.3.2"
