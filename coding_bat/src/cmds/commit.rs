@@ -25,7 +25,7 @@ pub fn run() {
     {
         let path = entry.path();
         let status = repo
-            .status_file(&pathdiff::diff_paths(&path, &cwd).unwrap())
+            .status_file(&pathdiff::diff_paths(path, &cwd).unwrap())
             .expect("getting status of file failed");
         let subject = path
             .parent()
@@ -37,11 +37,11 @@ pub fn run() {
         let name = path.file_name().unwrap().to_str().unwrap();
         let mut commit_msg: Option<String> = None;
         if new_file_states.contains(&status) {
-            commit_msg = Some(format!("feat[{}]: finish {}", subject, name));
+            commit_msg = Some(format!("feat[{subject}]: finish {name}"));
         } else if modified_file_states.contains(&status) {
-            commit_msg = Some(format!("fix[{}]: {}", subject, name));
+            commit_msg = Some(format!("fix[{subject}]: {name}"));
         } else if deleted_file_states.contains(&status) {
-            commit_msg = Some(format!("feat[{}]: remove {}", subject, name));
+            commit_msg = Some(format!("feat[{subject}]: remove {name}"));
         }
 
         if commit_msg.is_some() {
@@ -50,14 +50,14 @@ pub fn run() {
                 .arg("add")
                 .arg(path)
                 .output()
-                .expect(&format!("staging {} with git failed", path.display()));
+                .unwrap_or_else(|_| panic!("staging {} with git failed", path.display()));
             Command::new("git")
                 .current_dir(FOLDER)
                 .arg("commit")
                 .arg("-m")
                 .arg(commit_msg.as_ref().unwrap())
                 .output()
-                .expect(&format!("committing {} with git failed", path.display()));
+                .unwrap_or_else(|_| panic!("committing {} with git failed", path.display()));
             println!("committed {} ({})", name, commit_msg.unwrap());
         }
     }

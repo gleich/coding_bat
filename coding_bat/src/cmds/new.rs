@@ -1,7 +1,7 @@
 use std::{fs, path::Path, process::Command};
 
 use anyhow::{Context, Result};
-use dialoguer::{theme::ColorfulTheme, FuzzySelect, Input};
+use dialoguer::{theme::ColorfulTheme, Input};
 
 use crate::{cli::DIALOGUER_THEME, FOLDER};
 
@@ -13,9 +13,10 @@ pub fn run() {
         .join(format!("{}.py", opts.name));
     fs::write(&path, "").expect("creating file failed");
     Command::new("code")
-        .arg(path)
+        .arg(&path)
         .output()
         .expect("opening document with code failed");
+    println!("created {}", path.display());
 }
 
 struct Options {
@@ -31,18 +32,10 @@ fn ask() -> Result<Options> {
         .interact_text()
         .context("asking for assignment name failed")?;
     let language = String::from("python");
-    let sections = ["Warmup-1", "Warmup-2"];
-    let section = sections
-        .get(
-            FuzzySelect::with_theme(theme)
-                .items(&sections)
-                .interact()
-                .context("asking for section name failed")?,
-        )
-        .unwrap();
+    let section = String::from("Warmup-2");
     Ok(Options {
         name,
         language,
-        section: section.to_string(),
+        section,
     })
 }
