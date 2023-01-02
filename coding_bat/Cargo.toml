@@ -1,0 +1,10 @@
+[package]
+name = "coding_bat"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.68"
+clap = "4.0.32"
+dialoguer = { version = "0.10.2", features = ["fuzzy-select"] }
+lazy_static = "1.4.0"
