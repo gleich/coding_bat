@@ -11,7 +11,7 @@ pub fn run() {
         .join(opts.language)
         .join(opts.section)
         .join(format!("{}.py", opts.name));
-    fs::write(&path, "").expect("creating file failed");
+    fs::write(&path, format!("def {}():\n    ", opts.name)).expect("creating file failed");
     Command::new("code")
         .arg(&path)
         .output()
